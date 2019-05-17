@@ -132,3 +132,4 @@ with tf.Session() as sess:
             makedirs(path)
             mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
             plt.imshow(res)
+            plt.show()
