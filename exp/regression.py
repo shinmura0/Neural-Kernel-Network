@@ -36,7 +36,7 @@ N_RUNS=dict(
 )
 FLOAT_TYPE = gfs.settings.float_type
 SMALL_DATASETS=['boston', 'concrete', 'energy', 'wine', 'yacht']
-epochs = 20000 #if args.data in SMALL_DATASETS else 10000
+epochs = 200#20000 #if args.data in SMALL_DATASETS else 10000
 
 
 ############################## NKN Info ##############################
