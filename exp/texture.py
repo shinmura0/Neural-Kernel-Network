@@ -125,11 +125,12 @@ with tf.Session() as sess:
             var = sess.run(obs_var)
             logger.info('Epoch {} | loss = {:.4f} | var: {:.4f}'.format(epoch, obj, var))
 
-        if epoch % 500 == 0:
+        if epoch % 10 == 0:
             mu = sess.run(pred_mu)
             res[60:120, 80:160] = mu
             #path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
             #makedirs(path)
             #mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
+            res = np.array(res)
             plt.imshow(res,'gray')
             plt.show()
