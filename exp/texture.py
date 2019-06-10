@@ -128,6 +128,9 @@ with tf.Session() as sess:
             mu = sess.run(pred_mu)
             res[60:120, 80:160] = mu
             print(res.shape)
-            path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
-            makedirs(path)
-            mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
+            #path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
+            #makedirs(path)
+            #mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
+            
+            plt.imshow(np.array(res))
+            plt.show()
