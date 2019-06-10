@@ -20,9 +20,6 @@ from data import get_data
 from utils.functions import median_distance_local
 from kernels import KernelWrapper
 
-import cv2
-from google.colab.patches import cv2_imshow
-
 FLOAT_TYPE=gfs.settings.float_type
 # Training settings
 parser = argparse.ArgumentParser(description='PyTorch Neural-Kernel-Network')
@@ -131,10 +128,6 @@ with tf.Session() as sess:
             mu = sess.run(pred_mu)
             res[60:120, 80:160] = mu
             print(res.shape)
-            #path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
-            #makedirs(path)
-            #mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
-            cv2_imshow(res)
-
-            #plt.imshow(res,'gray')
-            #plt.show()
+            path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
+            makedirs(path)
+            mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
