@@ -117,14 +117,14 @@ obs_var = model.likelihood.variance
 ############################## session run ##############################
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    for epoch in range(20):
+    for epoch in range(2000):
         _, obj = sess.run([infer, loss])
 
         if epoch % 10 == 0:
             var = sess.run(obs_var)
             logger.info('Epoch {} | loss = {:.4f} | var: {:.4f}'.format(epoch, obj, var))
 
-        if epoch % 10 == 0:
+        if epoch % 500 == 0:
             mu = sess.run(pred_mu)
             res[60:120, 80:160] = mu
             print(res.shape)
