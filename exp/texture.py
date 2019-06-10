@@ -20,6 +20,8 @@ from data import get_data
 from utils.functions import median_distance_local
 from kernels import KernelWrapper
 
+import cv2
+from google.colab.patches import cv2_imshow
 
 FLOAT_TYPE=gfs.settings.float_type
 # Training settings
@@ -132,5 +134,7 @@ with tf.Session() as sess:
             #path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
             #makedirs(path)
             #mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
-            plt.imshow(res,'gray')
-            plt.show()
+            cv2_imshow(res)
+
+            #plt.imshow(res,'gray')
+            #plt.show()
