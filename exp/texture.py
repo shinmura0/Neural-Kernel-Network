@@ -117,20 +117,17 @@ obs_var = model.likelihood.variance
 ############################## session run ##############################
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    for epoch in range(100):
+    for epoch in range(2000):
         _, obj = sess.run([infer, loss])
 
         if epoch % 10 == 0:
             var = sess.run(obs_var)
             logger.info('Epoch {} | loss = {:.4f} | var: {:.4f}'.format(epoch, obj, var))
 
-        if epoch % 10 == 0:
+        if epoch % 500 == 0:
             mu = sess.run(pred_mu)
             res[60:120, 80:160] = mu
             print(res.shape)
-            #path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
-            #makedirs(path)
-            #mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
-            
-            plt.imshow(np.array(res))
-            plt.show()
+            path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
+            makedirs(path)
+            mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))    
