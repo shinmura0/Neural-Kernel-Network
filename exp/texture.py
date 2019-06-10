@@ -131,9 +131,5 @@ with tf.Session() as sess:
             #path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
             #makedirs(path)
             #mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))
-            res = np.array(res)
-            plt.imshow(res,'gray')
+            plt.imshow(res)
             plt.show()
-            
-    plt.imshow(res,'gray')
-    plt.show()
