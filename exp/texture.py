@@ -93,7 +93,6 @@ def NKNInfo(x_train, idx):
 data = get_data('texture')(args.data)
 x_train1, x_train2 = data.x_train1.astype(FLOAT_TYPE), data.x_train2.astype(FLOAT_TYPE)
 y_train = data.y_train.astype(FLOAT_TYPE)
-print(x_train1.shape,x_train2.shape,y_train.shape)
 x_test1, x_test2 = data.x_test1.astype(FLOAT_TYPE), data.x_test2.astype(FLOAT_TYPE)
 y_test = data.y_test.astype(FLOAT_TYPE)
 
