@@ -156,13 +156,13 @@ def load_texture(img_name):
     x_train1 = np.arange(nx1) / 224
     x_train2 = np.arange(nx2) / 224
     y_train = copy.copy(gray)
-    y_train[60:120, 80:160] = np.random.randn(60, 80) * 1e3
+    y_train[60:120, 130:210] = np.random.randn(60, 80) * 1e3#80:160
     x_test1 = np.arange(60, 120) / 224
-    x_test2 = np.arange(80, 160) / 224
-    y_test = gray[60:120, 80:160]
+    x_test2 = np.arange(130, 210) / 224
+    y_test = gray[60:120, 130:210]
     gt = copy.copy(gray)
     mask = np.zeros_like(gray, dtype=np.int32)
-    mask[60:120, 80:160] = 1
+    mask[60:120, 130:210] = 1
     hparams = HParams(
         x_train1=np.expand_dims(x_train1, 1),
         x_train2=np.expand_dims(x_train2, 1),
