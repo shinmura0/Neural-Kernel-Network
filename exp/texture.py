@@ -16,6 +16,11 @@ import tensorflow as tf
 import copy
 import os
 
+import sys
+root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(root_path)
+DATA_PATH = os.path.join(root_path, 'data/DATA')
+
 from utils.create_logger import create_logger, makedirs
 from data import get_data
 from utils.functions import median_distance_local
