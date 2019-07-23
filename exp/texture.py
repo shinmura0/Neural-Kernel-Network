@@ -126,7 +126,7 @@ with tf.Session() as sess:
 
         if epoch % 500 == 0:
             mu = sess.run(pred_mu)
-            res[60:120, 80:160] = mu
+            res[60:120, 130:210] = mu
             print(res.shape)
             path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
             makedirs(path)
