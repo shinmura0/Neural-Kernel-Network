@@ -89,8 +89,37 @@ def NKNInfo(x_train, idx):
     )[args.kern]
     return kernel, wrapper
 
+def load_texture(img_name):
+    def rgb2gray(rgb):
+        return np.dot(rgb[..., :3], [0.299, 0.587, 0.114])
+    rgb = mpimg.imread(os.path.join(DATA_PATH, img_name+'.png'))
+    gray = rgb2gray(rgb)
+
+    nx1, nx2 = gray.shape
+    x_train1 = np.arange(nx1) / 224
+    x_train2 = np.arange(nx2) / 224
+    y_train = copy.copy(gray)
+    y_train[60:120, 130:210] = np.random.randn(60, 80) * 1e3#80:160
+    x_test1 = np.arange(60, 120) / 224
+    x_test2 = np.arange(130, 210) / 224
+    y_test = gray[60:120, 130:210]
+    gt = copy.copy(gray)
+    mask = np.zeros_like(gray, dtype=np.int32)
+    mask[60:120, 130:210] = 1
+    hparams = HParams(
+        x_train1=np.expand_dims(x_train1, 1),
+        x_train2=np.expand_dims(x_train2, 1),
+        y_train=y_train,
+        x_test1=np.expand_dims(x_test1, 1),
+        x_test2=np.expand_dims(x_test2, 1),
+        y_test=y_test,
+        gt=gt,
+        mask=mask,
+    )
+    return hparams
+
 ############################## load data ##############################
-data = get_data('texture')(args.data)
+data = load_texture(args.data)
 x_train1, x_train2 = data.x_train1.astype(FLOAT_TYPE), data.x_train2.astype(FLOAT_TYPE)
 y_train = data.y_train.astype(FLOAT_TYPE)
 x_test1, x_test2 = data.x_test1.astype(FLOAT_TYPE), data.x_test2.astype(FLOAT_TYPE)
@@ -120,7 +149,7 @@ with tf.Session() as sess:
     for epoch in range(1501):
         _, obj = sess.run([infer, loss])
 
-        if epoch % 10 == 0:
+        if epoch % 100 == 0:
             var = sess.run(obs_var)
             logger.info('Epoch {} | loss = {:.4f} | var: {:.4f}'.format(epoch, obj, var))
 
