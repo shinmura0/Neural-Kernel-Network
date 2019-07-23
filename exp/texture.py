@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import tensorflow as tf
 import copy
+import os
 
 from utils.create_logger import create_logger, makedirs
 from data import get_data
