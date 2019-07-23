@@ -17,7 +17,7 @@ import copy
 import os
 
 import sys
-from .hparams import HParams
+from data.hparams import HParams
 root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(root_path)
 DATA_PATH = os.path.join(root_path, 'data/DATA')
