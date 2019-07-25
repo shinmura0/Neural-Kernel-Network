@@ -126,14 +126,15 @@ def load_texture(img_name, h_min=60, h_max=120, w_min=130, w_max=210):
     return hparams
 
 ############################## training ##############################
-fig_size=224
+fig_size = 224
+divide = 8
 predict_fig = np.zeros((fig_size, fig_size))
 
-for h in range(1):
-    for w in range(1):
+for h in range(2):
+    for w in range(2):
         print("h:",h+1,"/4,","w",w+1,"/4",)
         ############################## load data ##############################
-        data = load_texture(args.data, h*int(fig_size/4), (h+1)*int(fig_size/4), w*int(fig_size/4), (w+1)*int(fig_size/4))
+        data = load_texture(args.data, h*int(fig_size/divide), (h+1)*int(fig_size/divide), w*int(fig_size/divide), (w+1)*int(fig_size/divide))
         x_train1, x_train2 = data.x_train1.astype(FLOAT_TYPE), data.x_train2.astype(FLOAT_TYPE)
         y_train = data.y_train.astype(FLOAT_TYPE)
         x_test1, x_test2 = data.x_test1.astype(FLOAT_TYPE), data.x_test2.astype(FLOAT_TYPE)
@@ -143,10 +144,10 @@ for h in range(1):
         res = copy.copy(y_train)
 
         ############################## build graph ##############################
-        kernel1, wrapper1 = NKNInfo(x_train1, str(h*4+w))
+        kernel1, wrapper1 = NKNInfo(x_train1, str(h*divide+w))
         kernel1 = NeuralKernelNetwork(1, KernelWrapper(kernel1), NKNWrapper(wrapper1))
 
-        kernel2, wrapper2 = NKNInfo(x_train2, str(h*4+w+20))
+        kernel2, wrapper2 = NKNInfo(x_train2, str(h*divide+w+20))
         kernel2 = NeuralKernelNetwork(1, KernelWrapper(kernel2), NKNWrapper(wrapper2))
 
         model = gfs.models.KGPR(x_train1, x_train2, y_train, kernel1, kernel2, mask)
@@ -160,7 +161,7 @@ for h in range(1):
         ############################## session run ##############################
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())
-            for epoch in range(2001):
+            for epoch in range(1501):
                 _, obj = sess.run([infer, loss])
 
                 if epoch % 500 == 0:
@@ -174,7 +175,7 @@ for h in range(1):
                     makedirs(path)
                     mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))"""
             mu = sess.run(pred_mu)
-            predict_fig[h*int(fig_size/4):(h+1)*int(fig_size/4), w*int(fig_size/4):(w+1)*int(fig_size/4)] = mu
+            predict_fig[h*int(fig_size/divide):(h+1)*int(fig_size/divide), w*int(fig_size/divide):(w+1)*int(fig_size/divide)] = mu
             
 path = osp.join('results/texture/'+args.data, args.kern, 'result.png')
 makedirs(path)
