@@ -132,7 +132,7 @@ predict_fig = np.zeros((fig_size, fig_size))
 
 for h in range(divide):
     for w in range(divide):
-        print(\n"h:",h+1,"/", divide, ",","w:",w+1,"/", divide)
+        print("h:",h+1,"/", divide, ",","w:",w+1,"/", divide)
         ############################## load data ##############################
         data = load_texture(args.data, h*int(fig_size/divide), (h+1)*int(fig_size/divide), w*int(fig_size/divide), (w+1)*int(fig_size/divide))
         x_train1, x_train2 = data.x_train1.astype(FLOAT_TYPE), data.x_train2.astype(FLOAT_TYPE)
