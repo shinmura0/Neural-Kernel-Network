@@ -96,23 +96,23 @@ def NKNInfo(x_train, idx):
     )[args.kern]
     return kernel, wrapper
 
-def load_texture(img_name):
+def load_texture(img_name, h_min=60, h_max=120, w_min=130, w_max=210):
     def rgb2gray(rgb):
         return np.dot(rgb[..., :3], [0.299, 0.587, 0.114])
     rgb = mpimg.imread(os.path.join(DATA_PATH, img_name+'.png'))
     gray = rgb2gray(rgb)
 
     nx1, nx2 = gray.shape
-    x_train1 = np.arange(nx1) / 224
-    x_train2 = np.arange(nx2) / 224
+    x_train1 = np.arange(nx1) / nx1
+    x_train2 = np.arange(nx2) / nx2
     y_train = copy.copy(gray)
-    y_train[60:120, 130:210] = np.random.randn(60, 80) * 1e3#80:160
-    x_test1 = np.arange(60, 120) / 224
-    x_test2 = np.arange(130, 210) / 224
-    y_test = gray[60:120, 130:210]
+    y_train[h_min:h_max, w_min:w_max] = np.random.randn(h_max - h_min, w_max - w_min) * 1e3
+    x_test1 = np.arange(h_min, h_max) / nx1
+    x_test2 = np.arange(w_min, w_max) / nx2
+    y_test = gray[h_min:h_max, w_min:w_max]
     gt = copy.copy(gray)
     mask = np.zeros_like(gray, dtype=np.int32)
-    mask[60:120, 130:210] = 1
+    mask[h_min:h_max, w_min:w_max] = 1
     hparams = HParams(
         x_train1=np.expand_dims(x_train1, 1),
         x_train2=np.expand_dims(x_train2, 1),
