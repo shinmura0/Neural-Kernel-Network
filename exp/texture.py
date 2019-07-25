@@ -162,7 +162,7 @@ for h in range(2):
         ############################## session run ##############################
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())
-            for epoch in range(10):
+            for epoch in range(1501):
                 _, obj = sess.run([infer, loss])
 
                 if epoch % 500 == 0:
