@@ -34,7 +34,7 @@ parser.add_argument('--data', type=str, default="plate", help='choose data')
 parser.add_argument('--kern', type=str, default='nkn')
 args = parser.parse_args()
 
-logger = create_logger('results/texture/' + args.data, 'logging', __file__)
+#logger = create_logger('results/texture/' + args.data, 'logging', __file__)
 #logger.info('----------------use {}-----------------'.format(args.kern))
 
 ############################## NKN info ##############################
@@ -167,7 +167,7 @@ for h in range(2):
 
                 if epoch % 500 == 0:
                     var = sess.run(obs_var)
-                    logger.info('Epoch {} | loss = {:.4f} | var: {:.4f}'.format(epoch, obj, var))
+                    print('Epoch {} | loss = {:.4f} | var: {:.4f}'.format(epoch, obj, var))
 
                 """if epoch % 500 == 0:
                     mu = sess.run(pred_mu)
