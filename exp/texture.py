@@ -125,45 +125,57 @@ def load_texture(img_name, h_min=60, h_max=120, w_min=130, w_max=210):
     )
     return hparams
 
-############################## load data ##############################
-data = load_texture(args.data)
-x_train1, x_train2 = data.x_train1.astype(FLOAT_TYPE), data.x_train2.astype(FLOAT_TYPE)
-y_train = data.y_train.astype(FLOAT_TYPE)
-x_test1, x_test2 = data.x_test1.astype(FLOAT_TYPE), data.x_test2.astype(FLOAT_TYPE)
-y_test = data.y_test.astype(FLOAT_TYPE)
+############################## training ##############################
+fig_size=224
+predict_fig = np.zeros((fig_size, fig_size, 3))
 
-mask = data.mask.astype(FLOAT_TYPE)
-res = copy.copy(y_train)
+for h in range(1):
+    for w in range(1):
+        print("h:",h,"/4,","w",w,"/4",)
+        ############################## load data ##############################
+        data = load_texture(args.data, h*int(fig_size/4), (h+1)*int(fig_size/4), w*int(fig_size/4), (w+1)*int(fig_size/4))
+        x_train1, x_train2 = data.x_train1.astype(FLOAT_TYPE), data.x_train2.astype(FLOAT_TYPE)
+        y_train = data.y_train.astype(FLOAT_TYPE)
+        x_test1, x_test2 = data.x_test1.astype(FLOAT_TYPE), data.x_test2.astype(FLOAT_TYPE)
+        y_test = data.y_test.astype(FLOAT_TYPE)
 
-############################## build graph ##############################
-kernel1, wrapper1 = NKNInfo(x_train1, '1')
-kernel1 = NeuralKernelNetwork(1, KernelWrapper(kernel1), NKNWrapper(wrapper1))
+        mask = data.mask.astype(FLOAT_TYPE)
+        res = copy.copy(y_train)
 
-kernel2, wrapper2 = NKNInfo(x_train2, '2')
-kernel2 = NeuralKernelNetwork(1, KernelWrapper(kernel2), NKNWrapper(wrapper2))
+        ############################## build graph ##############################
+        kernel1, wrapper1 = NKNInfo(x_train1, '1')
+        kernel1 = NeuralKernelNetwork(1, KernelWrapper(kernel1), NKNWrapper(wrapper1))
 
-model = gfs.models.KGPR(x_train1, x_train2, y_train, kernel1, kernel2, mask)
-loss = model.objective
-optimizer = tf.train.AdamOptimizer(1e-3)
+        kernel2, wrapper2 = NKNInfo(x_train2, '2')
+        kernel2 = NeuralKernelNetwork(1, KernelWrapper(kernel2), NKNWrapper(wrapper2))
 
-infer = optimizer.minimize(loss)
-pred_mu = model.predict_f(x_test1, x_test2)
-obs_var = model.likelihood.variance
+        model = gfs.models.KGPR(x_train1, x_train2, y_train, kernel1, kernel2, mask)
+        loss = model.objective
+        optimizer = tf.train.AdamOptimizer(1e-3)
 
-############################## session run ##############################
-with tf.Session() as sess:
-    sess.run(tf.global_variables_initializer())
-    for epoch in range(1501):
-        _, obj = sess.run([infer, loss])
+        infer = optimizer.minimize(loss)
+        pred_mu = model.predict_f(x_test1, x_test2)
+        obs_var = model.likelihood.variance
 
-        if epoch % 100 == 0:
-            var = sess.run(obs_var)
-            logger.info('Epoch {} | loss = {:.4f} | var: {:.4f}'.format(epoch, obj, var))
+        ############################## session run ##############################
+        with tf.Session() as sess:
+            sess.run(tf.global_variables_initializer())
+            for epoch in range(1501):
+                _, obj = sess.run([infer, loss])
 
-        if epoch % 500 == 0:
+                if epoch % 100 == 0:
+                    var = sess.run(obs_var)
+                    logger.info('Epoch {} | loss = {:.4f} | var: {:.4f}'.format(epoch, obj, var))
+
+                """if epoch % 500 == 0:
+                    mu = sess.run(pred_mu)
+                    res[60:120, 130:210] = mu
+                    path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
+                    makedirs(path)
+                    mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))"""
             mu = sess.run(pred_mu)
-            res[60:120, 130:210] = mu
-            print(res.shape)
-            path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
-            makedirs(path)
-            mpimg.imsave(path, res, cmap=plt.get_cmap('gray'))    
+            predict_fig[h*int(fig_size/4):(h+1)*int(fig_size/4), w*int(fig_size/4):(w+1)*int(fig_size/4)] = mu
+            
+path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
+makedirs(path)
+mpimg.imsave(path, predict_fig, cmap=plt.get_cmap('gray'))"""
