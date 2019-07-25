@@ -178,4 +178,4 @@ for h in range(1):
             
 path = osp.join('results/texture/'+args.data, args.kern, 'epoch_{}.png'.format(epoch))
 makedirs(path)
-mpimg.imsave(path, predict_fig, cmap=plt.get_cmap('gray'))"""
+mpimg.imsave(path, predict_fig, cmap=plt.get_cmap('gray'))
