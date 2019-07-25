@@ -144,26 +144,16 @@ for h in range(2):
         res = copy.copy(y_train)
 
         ############################## build graph ##############################
-        if h == 0 and w == 0:
-            kernel1, wrapper1 = NKNInfo(x_train1, str(h*divide+w))
-            kernel1 = NeuralKernelNetwork(1, KernelWrapper(kernel1), NKNWrapper(wrapper1))
+        kernel1, wrapper1 = NKNInfo(x_train1, str(h*divide+w))
+        kernel1 = NeuralKernelNetwork(1, KernelWrapper(kernel1), NKNWrapper(wrapper1))
 
-            kernel2, wrapper2 = NKNInfo(x_train2, str(h*divide+w+20))
-            kernel2 = NeuralKernelNetwork(1, KernelWrapper(kernel2), NKNWrapper(wrapper2))
+        kernel2, wrapper2 = NKNInfo(x_train2, str(h*divide+w+20))
+        kernel2 = NeuralKernelNetwork(1, KernelWrapper(kernel2), NKNWrapper(wrapper2))
 
-            model = gfs.models.KGPR(x_train1, x_train2, y_train, kernel1, kernel2, mask)
-        
-        else:
-            kernel_1, wrapper_1 = NKNInfo(x_train1, "100")
-            kernel_1 = NeuralKernelNetwork(1, KernelWrapper(kernel_1), NKNWrapper(wrapper_1))
-
-            kernel_2, wrapper_2 = NKNInfo(x_train2, "101")
-            kernel_2 = NeuralKernelNetwork(1, KernelWrapper(kernel_2), NKNWrapper(wrapper_2))
-
-            model1 = gfs.models.KGPR(x_train1, x_train2, y_train, kernel_1, kernel_2, mask, name="new")
+        model = gfs.models.KGPR(x_train1, x_train2, y_train, kernel1, kernel2, mask, name=str(h*divide+w))
 
         loss = model.objective
-        optimizer = tf.train.AdamOptimizer(1e-3)
+        optimizer = tf.train.AdamOptimizer(1e-3, name=str(h*divide+w))
 
         infer = optimizer.minimize(loss)
         pred_mu = model.predict_f(x_test1, x_test2)
