@@ -129,8 +129,8 @@ def load_texture(img_name, h_min=60, h_max=120, w_min=130, w_max=210):
 fig_size=224
 predict_fig = np.zeros((fig_size, fig_size))
 
-for h in range(2):
-    for w in range(2):
+for h in range(1):
+    for w in range(1):
         print("h:",h+1,"/4,","w",w+1,"/4",)
         ############################## load data ##############################
         data = load_texture(args.data, h*int(fig_size/4), (h+1)*int(fig_size/4), w*int(fig_size/4), (w+1)*int(fig_size/4))
