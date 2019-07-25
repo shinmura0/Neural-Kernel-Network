@@ -34,7 +34,7 @@ parser.add_argument('--data', type=str, default="plate", help='choose data')
 parser.add_argument('--kern', type=str, default='nkn')
 args = parser.parse_args()
 
-#logger = create_logger('results/texture/' + args.data, 'logging', __file__)
+logger = create_logger('results/texture/' + args.data, 'logging', __file__)
 #logger.info('----------------use {}-----------------'.format(args.kern))
 
 ############################## NKN info ##############################
