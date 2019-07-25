@@ -160,7 +160,7 @@ for h in range(2):
             kernel_2, wrapper_2 = NKNInfo(x_train2, "101")
             kernel_2 = NeuralKernelNetwork(1, KernelWrapper(kernel_2), NKNWrapper(wrapper_2))
 
-            model1 = gfs.models.KGPR(x_train1, x_train2, y_train, kernel_1, kernel_2, mask)
+            model1 = gfs.models.KGPR(x_train1, x_train2, y_train, kernel_1, kernel_2, mask, name="new")
 
         loss = model.objective
         optimizer = tf.train.AdamOptimizer(1e-3)
