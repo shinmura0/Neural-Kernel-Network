@@ -143,10 +143,10 @@ for h in range(1):
         res = copy.copy(y_train)
 
         ############################## build graph ##############################
-        kernel1, wrapper1 = NKNInfo(x_train1, '1')
+        kernel1, wrapper1 = NKNInfo(x_train1, str(h*4+w))
         kernel1 = NeuralKernelNetwork(1, KernelWrapper(kernel1), NKNWrapper(wrapper1))
 
-        kernel2, wrapper2 = NKNInfo(x_train2, '2')
+        kernel2, wrapper2 = NKNInfo(x_train2, str(h*4+w+20))
         kernel2 = NeuralKernelNetwork(1, KernelWrapper(kernel2), NKNWrapper(wrapper2))
 
         model = gfs.models.KGPR(x_train1, x_train2, y_train, kernel1, kernel2, mask)
