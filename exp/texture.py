@@ -127,7 +127,7 @@ def load_texture(img_name, h_min=60, h_max=120, w_min=130, w_max=210):
 
 ############################## training ##############################
 fig_size = 224
-divide = 4
+divide = 8
 predict_fig = np.zeros((fig_size, fig_size))
 
 for h in range(divide):
