@@ -3,7 +3,7 @@ Edit Neural-Kernel-Network(https://arxiv.org/abs/1806.04326) for Anomaly detecti
 This method need no learning data.
 
 ## Code
-See AnomalyDetection_GP.ipynb.
+See **AnomalyDetection_GP.ipynb.**
 
 ## Result
 ![fig1](https://github.com/shinmura0/Neural-Kernel-Network/blob/master/result1.png "fig1")
