@@ -6,6 +6,7 @@ This method need no learning data.
 See AnomalyDetection_GP.ipynb.
 
 ## Result
-![fig1](http "fig1")
+![fig1](https://github.com/shinmura0/Neural-Kernel-Network/blob/master/result1.png "fig1")
+![fig1](https://github.com/shinmura0/Neural-Kernel-Network/blob/master/result2.png "fig2")
 
 Click [here](https://qiita.com/shinmura0/items/06d81c72601c7578c6d3) for details(Japanese).
