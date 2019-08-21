@@ -9,4 +9,4 @@ See **AnomalyDetection_GP.ipynb.**
 ![fig1](https://github.com/shinmura0/Neural-Kernel-Network/blob/master/result1.png "fig1")
 ![fig1](https://github.com/shinmura0/Neural-Kernel-Network/blob/master/result2.png "fig2")
 
-Click [here]() for details(Japanese).
+Click [here](https://qiita.com/shinmura0/items/95bb7f0bffc936cb3c2e) for details(Japanese).
